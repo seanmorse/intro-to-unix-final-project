@@ -1,0 +1,31 @@
+import pyowm
+#Weather
+
+#API KEY
+owm = pyowm.OWM('f9f7892352c1e361678f022dd02894e3')
+
+#Lat and Lon
+obs = owm.weather_at_coords(37.23, 80.4178)
+
+#Obtain weather information
+
+location = obs.get_location()
+
+area =  location.get_name() + ', us'
+
+forecast = owm.daily_forecast(area, limit=15)
+
+display_forecast = forecast.get_forecast()
+
+lst = display_forecast.get_weathers()
+
+f = open('weather.txt', 'weather')
+f.truncate()
+
+
+for weather in display_forecast:
+	weather_String= (weather.get_reference_time('iso'),str(weather.get_status()))
+	temp=''.join(weather_String)
+	f.write(temp)
+	f.write('\n')
+f.close()
