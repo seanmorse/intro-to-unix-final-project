@@ -19,6 +19,8 @@ public:
     QTextEdit *textEdit;
     QLineEdit *lineEdit;
     QLineEdit *lineEdit2;
+    QLabel *label1;
+    QLabel *label2;
     QPushButton* Advice;
     QPushButton* Weather;
     QPushButton* Reminder;

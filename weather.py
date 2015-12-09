@@ -2,12 +2,7 @@ import pyowm
 import datetime
 import argparse
 from geopy.geocoders import Nominatim
-import zipcode
-import googlemaps
 import requests
-import json
-import urllib
-import pprint
 import re
 
 parser = argparse.ArgumentParser()
@@ -15,11 +10,10 @@ parser.add_argument('-s', type=str)
 parser.add_argument('-d', type=str)
 
 geolocator=Nominatim()
-#zip=zipcode.isequal(str(parser.parse_args().s))
-#print zip.lat
+
 coord=geolocator.geocode(str(parser.parse_args().s))
 coord2=geolocator.geocode(str(parser.parse_args().d))
-#print((coord.latitude, coord.longitude))
+
 #Weather
 
 #API KEY
@@ -31,11 +25,9 @@ obs = owm.weather_at_coords(coord.latitude, coord.longitude)
 coordstring="("+str(coord.latitude)+","+str(coord.longitude)+")"
 coordstring2="("+str(coord2.latitude)+","+str(coord2.longitude)+")"
 #google maps
-gmaps = googlemaps.Client(key='AIzaSyD_8SunCrqkR79uNj2fxGVZXKr8cHfsvXg')
+#gmaps = googlemaps.Client(key='AIzaSyD_8SunCrqkR79uNj2fxGVZXKr8cHfsvXg')
 
-directions_result = gmaps.directions(coordstring,
-                                     "Blacksburg",
-                                     mode="driving")
+
 gm= requests.get('https://maps.googleapis.com/maps/api/directions/json?origin='+coordstring+'&destination='+coordstring2+'&mode=driving&key=AIzaSyD_8SunCrqkR79uNj2fxGVZXKr8cHfsvXg')
 temp= gm.text
 sl=[]
@@ -109,7 +101,7 @@ for z in range(0, len(lat_list)):
 	for x in range(0, len(weather_info)):
 		
 		#f.write(date_info[x].strftime("%m/%d/%Y")) #%H:%M:%S
-		f.write('\nWeather: ')
+		f.write('\nWeather Today: ')
 		f.write(weather_info[x])
 		#f.write(len(weather_info))
 		#f.write(len(date_info))

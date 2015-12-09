@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget* parent):QWidget(parent)
     textEdit=new QTextEdit;
     lineEdit=new QLineEdit;
     lineEdit2=new QLineEdit;
+    label1=new QLabel("Start location");
+    label2=new QLabel("Destination location");
     Advice=new QPushButton("Advice");
     Weather=new QPushButton("Weather");
     Reminder=new QPushButton("Reminder");
@@ -33,7 +35,9 @@ MainWindow::MainWindow(QWidget* parent):QWidget(parent)
     connect(this,SIGNAL(buttonClicked(int)),this,SLOT(button(int)));
     layout = new QVBoxLayout;
     layout->addWidget(textEdit);
+    layout->addWidget(label1);
     layout->addWidget(lineEdit);
+    layout->addWidget(label2);
     layout->addWidget(lineEdit2);
     //layout->addWidget(Advice);
     layout->addWidget(Weather);
@@ -61,7 +65,7 @@ MainWindow::MainWindow(QWidget* parent):QWidget(parent)
     reminderMessage->addButton(OK,QMessageBox::ActionRole);
     reminderMessage->setModal(1);
 
-
+/*
     QFile file("reminder.dat");
 
     file.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -129,8 +133,8 @@ if(!rError){
         aError=1;
 
     }
-
-
+*/
+/*
     QFile file3("weather.dat");
 
     file3.open(QIODevice::ReadOnly | QIODevice::Text);
@@ -151,7 +155,7 @@ if(!rError){
         wError=1;
 
     }
-
+*/
 }
 
 
@@ -219,7 +223,8 @@ void MainWindow::handleAdviceButton()
 void MainWindow::handleWeatherButton()
 {
     if(!wError){
-
+        qDebug()<<"weather button press";
+        textEdit->clear();
         QProcess p;
         QStringList params;
         QString scriptFile =  QDir::currentPath()+"/weather.py";
@@ -232,7 +237,7 @@ void MainWindow::handleWeatherButton()
 
         QString p_stdout = p.readAll();
         qDebug()<<p_stdout;
-        qDebug()<<p.errorString();
+      //  qDebug()<<p.errorString();
     QFile file("weather.dat");
 
     file.open(QIODevice::ReadOnly | QIODevice::Text);
