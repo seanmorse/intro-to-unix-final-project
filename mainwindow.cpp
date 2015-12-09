@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget* parent):QWidget(parent)
          connect(signalMapper, SIGNAL(mapped(int)), this, SIGNAL(buttonClicked(int)));
     textEdit=new QTextEdit;
     lineEdit=new QLineEdit;
+    lineEdit2=new QLineEdit;
     Advice=new QPushButton("Advice");
     Weather=new QPushButton("Weather");
     Reminder=new QPushButton("Reminder");
@@ -33,9 +34,10 @@ MainWindow::MainWindow(QWidget* parent):QWidget(parent)
     layout = new QVBoxLayout;
     layout->addWidget(textEdit);
     layout->addWidget(lineEdit);
-    layout->addWidget(Advice);
+    layout->addWidget(lineEdit2);
+    //layout->addWidget(Advice);
     layout->addWidget(Weather);
-    layout->addWidget(Reminder);
+   // layout->addWidget(Reminder);
 
     layout->addWidget(Quit);
     this->setLayout(layout);
@@ -223,7 +225,8 @@ void MainWindow::handleWeatherButton()
         QString scriptFile =  QDir::currentPath()+"/weather.py";
         qDebug()<<scriptFile;
         QString lineText="\""+lineEdit->text()+"\"";
-        QString command= "python " + scriptFile+" -s "+lineText;
+        QString lineText2="\""+lineEdit2->text()+"\"";
+        QString command= "python " + scriptFile+" -s "+lineText+ " -d "+lineText2;
         p.start(command);
         p.waitForFinished(-1);
 
@@ -269,10 +272,12 @@ void MainWindow::handleWeatherButton()
     ///RANDOMLY
     ///
     //
-   for(int test_var=0;test_var<advice.size();test_var++)
+   for(int test_var=0;test_var<advice.size();test_var=test_var+2)
      {
     //int random=qrand() % advice.size();
-    textEdit->append(advice[test_var].prepend("Weather: "));
+
+    textEdit->append(advice[test_var]);
+    textEdit->append(advice[test_var+1]+"\n");
 
    }
     file.close();
